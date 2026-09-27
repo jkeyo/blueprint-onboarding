@@ -8,6 +8,10 @@ type TypographyStyles = {
   p1: TextStyle;
   p2: TextStyle;
   p3: TextStyle;
+  p1bold: TextStyle;
+  location: TextStyle;
+  engagements: TextStyle;
+  date: TextStyle;
 };
 
 // Add more components for different text elements if needed,
@@ -27,15 +31,53 @@ export const typography: TypographyStyles = StyleSheet.create({
   },
   h4: {
     fontSize: 20,
-    fontWeight: 'bold',
   },
   p1: {
-    fontSize: 16,
+    fontWeight: 400,
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 13,
+    fontStyle: 'normal',
+    color: '#262626',
+    lineHeight: 18,
+    letterSpacing: -0.07,
   },
   p2: {
-    fontSize: 14,
+    fontWeight: 400,
   },
   p3: {
-    fontSize: 12,
+    fontWeight: 400,
+  },
+  p1bold: {
+    fontFamily: 'Poppins_700Bold',
+    fontSize: 13,
+    fontStyle: 'normal',
+    fontWeight: 700,
+    letterSpacing: -0.07,
+    color: '#262626',
+    lineHeight: 18,
+  },
+  location: {
+    color: '#979797',
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 11,
+    fontStyle: 'normal',
+    fontWeight: 400,
+    letterSpacing: 0.05,
+  },
+  engagements: {
+    color: '#000',
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 10,
+    fontStyle: 'normal',
+    fontWeight: 400,
+    lineHeight: 18 /* 180% */,
+  },
+  date: {
+    color: '#979797',
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 10,
+    fontStyle: 'normal',
+    fontWeight: 400,
+    letterSpacing: 0.05,
   },
 });
