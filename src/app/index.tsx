@@ -12,7 +12,7 @@ import ProfilePlaceholder from '../../assets/profile-placeholder-icon.svg';
 import { typography } from '../styles/typography';
 
 export default function App() {
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_700Bold,
   });
