@@ -1,6 +1,6 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Image } from "expo-image";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Image } from 'expo-image';
 import CommentsIcon from '../../assets/comments-icon.svg';
 import HeartIcon from '../../assets/heart-icon.svg';
 import ShareIcon from '../../assets/messenger-icon.svg';
@@ -17,7 +17,15 @@ export interface PostProps {
   likeCount: number;
 }
 
-export default function Post({ username, npo, city, state, text, image, likeCount }: PostProps) {
+export default function Post({
+  username,
+  npo,
+  city,
+  state,
+  text,
+  image,
+  likeCount,
+}: PostProps) {
   return (
     <View style={styles.postContainer}>
       <View style={styles.headerRow}>
@@ -26,7 +34,9 @@ export default function Post({ username, npo, city, state, text, image, likeCoun
           <Text style={typography.p1bold}>
             {username} <Text style={typography.p1}>at</Text> {npo}
           </Text>
-          <Text style={typography.location}>{city}, {state}</Text>
+          <Text style={typography.location}>
+            {city}, {state}
+          </Text>
         </View>
       </View>
 

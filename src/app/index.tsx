@@ -1,18 +1,12 @@
 import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Image } from 'expo-image';
 import {
   Poppins_400Regular,
   Poppins_700Bold,
   useFonts,
 } from '@expo-google-fonts/poppins';
-import CommentsIcon from '../../assets/comments-icon.svg';
-import HeartIcon from '../../assets/heart-icon.svg';
-import ShareIcon from '../../assets/messenger-icon.svg';
-import ProfilePlaceholder from '../../assets/profile-placeholder-icon.svg';
-import Post, { PostProps } from '../components/Post';
-import { typography } from '../styles/typography';
 import { getAllPosts } from '../../api/supabase/queries/query';
+import Post, { PostProps } from '../components/Post';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -32,7 +26,7 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -41,19 +35,19 @@ export default function App() {
             <Text>Loading</Text>
           ) : (
             postData.map((post, index) => (
-            <View key={index}>
-              <Post
-                username={post.username}
-                npo={post.npo}
-                city={post.city}
-                state={post.state}
-                text={post.text}
-                image={post.image}
-                likeCount={post.likeCount}
-              />
-              <View style={styles.divider} />
-            </View>
-          ))
+              <View key={index}>
+                <Post
+                  username={post.username}
+                  npo={post.npo}
+                  city={post.city}
+                  state={post.state}
+                  text={post.text}
+                  image={post.image}
+                  likeCount={post.likeCount}
+                />
+                <View style={styles.divider} />
+              </View>
+            ))
           )}
         </ScrollView>
       </View>
