@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import {
@@ -9,91 +10,51 @@ import CommentsIcon from '../../assets/comments-icon.svg';
 import HeartIcon from '../../assets/heart-icon.svg';
 import ShareIcon from '../../assets/messenger-icon.svg';
 import ProfilePlaceholder from '../../assets/profile-placeholder-icon.svg';
+import Post, { PostProps } from '../components/Post';
 import { typography } from '../styles/typography';
+import { getAllPosts } from '../../api/supabase/queries/query';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_700Bold,
   });
+  const [postData, setPostData] = useState<PostProps[] | null>(null);
+
+  useEffect(() => {
+    async function loadPosts() {
+      const fetchedPosts = await getAllPosts();
+      setPostData(fetchedPosts);
+    }
+    loadPosts();
+  }, []);
 
   if (!fontsLoaded) {
     return null;
   }
+  
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <ScrollView>
-          <View style={styles.postContainer}>
-            <View style={styles.headerRow}>
-              <ProfilePlaceholder width={40} height={40} />
-              <View style={styles.headerTextColumn}>
-                <Text style={typography.p1bold}>
-                  neha32 <Text style={typography.p1}>at</Text> Mission Bit
-                </Text>
-                <Text style={typography.location}>San Francisco, CA</Text>
-              </View>
+          {postData === null ? (
+            <Text>Loading</Text>
+          ) : (
+            postData.map((post, index) => (
+            <View key={index}>
+              <Post
+                username={post.username}
+                npo={post.npo}
+                city={post.city}
+                state={post.state}
+                text={post.text}
+                image={post.image}
+                likeCount={post.likeCount}
+              />
+              <View style={styles.divider} />
             </View>
-
-            <Image
-              source={{
-                uri: 'https://cdn.britannica.com/51/178051-050-3B786A55/San-Francisco.jpg',
-              }}
-              style={styles.postImage}
-            />
-
-            <View style={styles.postDescription}>
-              <Text style={typography.p1}>
-                This past weekend, I taught at Mission Bit. I was working with a
-                group of high school students who were building their first web
-                pages. I really enjoyed being able to help guide 10 students on
-                learning CS fundamentals through a project! They were all really
-                eager to learn, and I'm glad I signed up. Highly recommend to
-                any other software engineers interested in volunteering! Sign-up
-                here: https://missionbit.org/get-involved/volunteer-with-us/
-              </Text>
-            </View>
-
-            <View style={styles.postEngagementText}>
-              <Text style={typography.engagements}>3 likes</Text>
-              <Text style={typography.engagements}>View 2 comments</Text>
-            </View>
-
-            <View style={styles.postEngagementButtons}>
-              <View style={styles.leftIcons}>
-                <HeartIcon width={24} height={21} />
-                <CommentsIcon width={24} height={23.344} />
-              </View>
-              <ShareIcon width={23} height={20} />
-            </View>
-
-            <View style={styles.dateContainer}>
-              <Text style={typography.date}>February 1</Text>
-            </View>
-          </View>
-
-          <View style={styles.divider} />
-
-          <View style={styles.postContainer}>
-            <View style={styles.headerRow}>
-              <ProfilePlaceholder width={40} height={40} />
-              <View style={styles.headerTextColumn}>
-                <Text style={typography.p1bold}>
-                  aiden_ugh <Text style={typography.p1}>at</Text> Boys and Girls
-                  Club
-                </Text>
-                <Text style={typography.location}>Oakland, CA</Text>
-              </View>
-            </View>
-
-            <View style={styles.postDescription}>
-              <Text style={typography.p1}>
-                I recently volunteered at my local Boys and Girls Club!
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.dividerTwo} />
+          ))
+          )}
         </ScrollView>
       </View>
     </View>
