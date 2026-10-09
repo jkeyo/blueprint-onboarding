@@ -12,10 +12,18 @@ export async function fetchAllRows() {
   return data;
 }
 
+interface DatabasePostRow {
+  user_name: string;
+  npo_name: string;
+  location_id: number;
+  post_text: string;
+  image_link: string;
+  num_likes: number;
+}
+
 export async function getAllPosts(): Promise<PostProps[]> {
   const { data, error } = await supabase.from('Posts').select('*');
 
-  // handle all errors
   if (error) {
     throw new Error(`Error fetching data: ${error.message}`);
   }
@@ -25,7 +33,7 @@ export async function getAllPosts(): Promise<PostProps[]> {
     2: { city: 'Oakland', state: 'CA' },
   };
 
-  const formattedData = data.map((row: any) => ({
+  const formattedData = data.map((row: DatabasePostRow) => ({
     username: row.user_name,
     npo: row.npo_name,
     city: locationMap[row.location_id]?.city || 'Unknown City',
